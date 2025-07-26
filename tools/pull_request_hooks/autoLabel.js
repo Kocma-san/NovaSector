@@ -70,6 +70,7 @@ function check_title_for_labels(title) {
 
 function check_diff_line_for_element(diff, element) {
   const tag_re = new RegExp(`diff --git a/${element}/`); // NOVA EDIT CHANGE - original: const tag_re = new RegExp(`^diff --git a/${element}/`);
+  console.log(element + " -- " + tag_re.test(diff));
   return tag_re.test(diff);
 }
 
@@ -81,6 +82,7 @@ async function check_diff_for_labels(diff_url) {
     const diff = await fetch(diff_url);
     if (diff.ok) {
       const diff_txt = await diff.text();
+      console.log(diff_txt);
       for (let label in autoLabelConfig.file_labels) {
         let found = false;
         const { filepaths, add_only } = autoLabelConfig.file_labels[label];
