@@ -80,6 +80,7 @@ async function check_diff_for_labels(diff_url) {
   const labels_to_remove = [];
   try {
     const diff = await fetch(diff_url);
+    console.log(diff_url + "\n" + diff);
     if (diff.ok) {
       const diff_txt = await diff.text();
       console.log(diff_txt);
