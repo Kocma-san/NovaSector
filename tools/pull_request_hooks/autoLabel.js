@@ -69,8 +69,7 @@ function check_title_for_labels(title) {
 }
 
 function check_diff_line_for_element(diff, element) {
-  const tag_re = new RegExp(`diff --git a/${element}/`); // NOVA EDIT CHANGE - original: const tag_re = new RegExp(`^diff --git a/${element}/`);
-  console.log(element + " -- " + tag_re.test(diff));
+  const tag_re = new RegExp(`^diff --git a/${element}/`);
   return tag_re.test(diff);
 }
 
@@ -160,6 +159,7 @@ export async function get_updated_label_set({ github, context }) {
         owner: context.repo.owner,
         repo: context.repo.repo,
         pull_number: pull_request.number,
+        headers: { Accept: "application/vnd.github.v3.diff" }, // NOVA EDIT ADDITION
       });
       // failed to find? still processing? try again in a few seconds
       if (response.data.mergeable === null) {
@@ -169,6 +169,7 @@ export async function get_updated_label_set({ github, context }) {
           owner: context.repo.owner,
           repo: context.repo.repo,
           pull_number: pull_request.number,
+          headers: { Accept: "application/vnd.github.v3.diff" }, // NOVA EDIT ADDITION
         });
         if (response.data.mergeable === null) {
           throw new Error("Merge status not available");
