@@ -128,6 +128,23 @@ export async function get_updated_label_set({ github, context }) {
     updated_labels.add(label.name);
   }
 
+  const prNumber = context.payload.pull_request.number;
+  const owner = context.repo.owner;
+  const repo = context.repo.repo;
+  const response = await github.request(
+    "GET /repos/{owner}/{repo}/pulls/{pull_number}",
+    {
+      owner,
+      repo,
+      pull_number: prNumber,
+      headers: {
+        accept: "application/vnd.github.v3.diff",
+      },
+    }
+  );
+
+  console.log(response);
+
   // diff is always checked
   if (diff_url) {
     const diff_tags = await check_diff_for_labels(diff_url);
