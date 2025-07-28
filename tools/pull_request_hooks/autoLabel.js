@@ -132,7 +132,7 @@ export async function get_updated_label_set({ github, context }) {
 
   // diff is always checked
   if (diff_url) {
-    const diff_tags = await check_diff_for_labels(diff_url);
+    const diff_tags = await check_diff_for_labels(github, context);
     for (let label of diff_tags.labels_to_add) {
       updated_labels.add(label);
     }
