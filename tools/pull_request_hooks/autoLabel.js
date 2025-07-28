@@ -86,7 +86,10 @@ async function check_diff_for_labels(diff_url) {
         "User-Agent": "tgstation/1.0-auto-label-script",
       },
     });
-    console.log("Diff URL:", diff_url);
+    console.log(
+      "Diff URL:",
+      diff_url + "   " + process.env.BLEP + " " + process.env.WEH
+    );
     // NOVA EDIT CHANGE END
     if (diff.ok) {
       const diff_txt = await diff.text();
