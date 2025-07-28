@@ -1,6 +1,6 @@
-name: Label and GBP (test5)
+name: Label and GBP (test6)
 on:
-  pull_request_target:
+  pull_request:
     types: [closed, opened, synchronize]
 jobs:
   # labeler must run before gbp because gbp calculates itself based on labels
