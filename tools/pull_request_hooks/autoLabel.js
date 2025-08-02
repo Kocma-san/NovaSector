@@ -105,6 +105,52 @@ async function check_diff_for_labels(diff_url) {
   return { labels_to_add, labels_to_remove };
 }
 
+// NOVA SECTOR EDIT ADDITION START
+async function check_diff_files(github, context) {
+  const labels_to_add = [];
+  const labels_to_remove = [];
+  try {
+    const changed_files = await github.rest.pulls.listFiles({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      pull_number: context.payload.pull_request.number,
+    });
+    console.log("\n diff:" + diff + "\n\n");
+    console.log(
+      "\n json:" + JSON.stringify(context.payload.pull_request, null, 2) + "\n"
+    );
+    if (changed_files.status === 200) {
+      for (let label in autoLabelConfig.file_labels) {
+        let found = false;
+        const { filepaths, add_only } = autoLabelConfig.file_labels[label];
+        for (let filepath of filepaths) {
+          for (let file_entry of changed_files.data) {
+            const file_re = new RegExp(`${filepath}`);
+            if (file_re.test(file_entry.filename)) {
+              found = true;
+              break;
+            }
+          }
+          if (found) {
+            break;
+          }
+        }
+        if (found) {
+          labels_to_add.push(label);
+        } else if (!add_only) {
+          labels_to_remove.push(label);
+        }
+      }
+    } else {
+      console.error(`Failed to fetch diff files: ${diff.status}`);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  return { labels_to_add, labels_to_remove };
+}
+// NOVA SECTOR EDIT ADDITION END
+
 export async function get_updated_label_set({ github, context }) {
   const { action, pull_request } = context.payload;
   const {
@@ -122,7 +168,7 @@ export async function get_updated_label_set({ github, context }) {
 
   // diff is always checked
   if (diff_url) {
-    const diff_tags = await check_diff_for_labels(github, context);
+    const diff_tags = await check_diff_files(github, context); // NOVA EDIT CHANGE - ORIGINAL: const diff_tags = await check_diff_for_labels(diff_url);
     for (let label of diff_tags.labels_to_add) {
       updated_labels.add(label);
     }
