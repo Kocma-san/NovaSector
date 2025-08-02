@@ -5,7 +5,7 @@ DAMAGE_MULTIPLIER 1
 
 ## REVIVAL ###
 
-## whether pod plants work or not
+## weh whether pod plants work or not
 REVIVAL_POD_PLANTS
 
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)

@@ -1,4 +1,4 @@
-name: Autowiki
+name: Autowiki weh
 on:
   schedule:
     - cron: "5 4 * * *"
