@@ -57,13 +57,13 @@ GLOBAL_LIST_INIT(analyzerthemes, list(
 		"toxin" = ceil(patient.getToxLoss()),
 		"oxy" = ceil(patient.getOxyLoss()),
 		"ssd" = (!patient.client),
-		"blood_type" = patient.dna.blood_type,
-		"blood_amount" = patient.blood_volume,
 		"majquirks" = patient.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE),
 		"minquirks" = patient.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY, TRUE),
-		"accessible_theme" = lowertext(user.client?.prefs.read_preference(/datum/preference/choiced/health_analyzer_themes)),
+		"accessible_theme" = LOWER_TEXT(user.client?.prefs.read_preference(/datum/preference/choiced/health_analyzer_themes)),
 		"species" = patient.dna.species,
 		"custom_species" = patient.client?.prefs.read_preference(/datum/preference/text/custom_species),
+		"body_temperature" = "[round(patient.bodytemperature-T0C, 0.1)] °C ([round(patient.bodytemperature*1.8-459.67, 0.1)] °F)",
+		"core_temperature" = "[round(patient.coretemperature-T0C, 0.1)] °C ([round(patient.coretemperature*1.8-459.67, 0.1)] °F)",
 	)
 
 	/*
@@ -181,6 +181,14 @@ GLOBAL_LIST_INIT(analyzerthemes, list(
 			"dangerous" = reagent.overdosed || istype(reagent, /datum/reagent/toxin),
 		))
 	data["chemicals_list"] = chemicals_list
+
+	/*
+	BLOOD
+	*/
+	var/datum/blood_type/blood_type = patient.get_bloodtype()
+	if(blood_type)
+		data["blood_type"] = blood_type
+		data["blood_amount"] = patient.blood_volume
 
 	/*
 	LIMBS

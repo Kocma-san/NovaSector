@@ -20,6 +20,7 @@ import { Window } from '../layouts';
 type MedScannerData = {
   patient: string;
   species: string;
+  custom_species: string;
   dead: boolean;
   health: number;
   max_health: number;
@@ -38,11 +39,11 @@ type MedScannerData = {
   blood_type: string;
   blood_amount: number;
   body_temperature: string;
+  core_temperature: string;
   advice: AdviceData[];
   accessible_theme: string;
   majquirks: string;
   minquirks: string;
-  custom_species: string;
   wounds: WoundData[];
   brain_traumas: string | null;
   viruses: VirusData[];
@@ -122,7 +123,7 @@ export const MedScanner = () => {
     chemicals_list,
     limb_data_list,
     damaged_organs,
-    blood_amount,
+    blood_type,
     advice,
     accessible_theme,
     wounds,
@@ -135,10 +136,10 @@ export const MedScanner = () => {
       <Window.Content scrollable>
         <PatientBasics />
         <AlienEmbryo />
-        {medical_alerts?.length ? <MedicalAlerts /> : null}
+        {medical_alerts.length ? <MedicalAlerts /> : null}
         {limb_data_list.length ? <PatientLimbs /> : null}
         {damaged_organs.length ? <PatientOrgans /> : null}
-        {blood_amount ? <PatientBlood /> : null}
+        {blood_type ? <PatientBlood /> : null}
         {chemicals_list.length ? <PatientChemicals /> : null}
         {wounds.length ? <Wounds /> : null}
         {viruses.length ? <Viruses /> : null}
@@ -687,7 +688,7 @@ const PatientOrgans = () => {
 
 const PatientBlood = () => {
   const { data } = useBackend<MedScannerData>();
-  const { blood_amount, blood_type, body_temperature } = data;
+  const { blood_amount, blood_type, body_temperature, core_temperature } = data;
   return (
     <Collapsible title="Blood & Temperature">
       <Section>
@@ -706,6 +707,9 @@ const PatientBlood = () => {
           </LabeledList.Item>
           <LabeledList.Item label={'Body Temperature'}>
             {body_temperature}
+          </LabeledList.Item>
+          <LabeledList.Item label={'Core Temperature'}>
+            {core_temperature}
           </LabeledList.Item>
           <LabeledList.Item color="cyan" label={'Blood Type:'}>
             {blood_type}

@@ -68,7 +68,7 @@
 
 .theme-hackerman {
   // Enhanced alien embryo styling for hackerman theme
-  .alien-embryo-section {
+  .MedicalScanner__alien-embryo-section {
     border-color: #00ff00 !important;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
 
@@ -81,7 +81,7 @@
 
 .theme-ntos_rusty {
   // Rusty theme alien embryo
-  .alien-embryo-section {
+  .MedicalScanner__alien-embryo-section {
     border-color: #ff6600 !important;
     box-shadow: 0 0 20px rgba(255, 100, 0, 0.6);
   }
@@ -89,7 +89,7 @@
 
 .theme-ntos_healthy {
   // Healthy theme alien embryo (ironic!)
-  .alien-embryo-section {
+  .MedicalScanner__alien-embryo-section {
     border-color: #ff3333 !important;
     box-shadow: 0 0 20px rgba(255, 50, 50, 0.7);
   }
@@ -97,7 +97,7 @@
 
 // BlackNTOS theme - sleek dark interface with cyan accents
 .theme-black_ntos {
-  .alien-embryo-section {
+  .MedicalScanner__alien-embryo-section {
     background: linear-gradient(
       135deg,
       rgba(80, 0, 0, 0.8),
